@@ -84,6 +84,17 @@ ale_continent
 
 Africa has the low life expectancy, which ranges from 39 to 76 (median of 55).  Oceania, Asia, Europe, and Americas have similar maximum life expectancies.  However, the median life expectancy is lower in Americas and Asia due to relatively lower minimum life expenctancies.
 
+```{r, global_lifeexp, echo=FALSE}
+(gle <- gapminder %>%
+  ggplot(aes(x=lifeExp)) + geom_histogram(binwidth=5, fill= "lightblue", color="black"))
+```
+
+```{r, global_lifeexp1, echo=FALSE}
+(gle1 <- gapminder %>%
+  ggplot(aes(x=lifeExp)) + geom_histogram(binwidth=1, fill= "lightblue", color="black"))
+```
+Life expectancy appears to be biomodally distributed.  This is due to lower median life expectancy in Asia, which is a major home to the world population.
+
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 
