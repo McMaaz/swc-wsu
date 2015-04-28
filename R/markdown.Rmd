@@ -1,0 +1,84 @@
+---
+title: "SWCtest"
+author: "Tai McMaaz"
+date: "April 28, 2015"
+output: html_document
+---
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+1^st^ = Lebanon
+2^nd^ = Australia
+3^rd^ = India
+
+
+Years
+1. 1952
+2. 1957
+3. 1962
+4. 1967
+5. 1972
+6. 1977
+7. 1982
+8. 1987
+9. 1992
+10. 1997
+11. 2002
+12. 2007
+
+plot_country <- 
+  function(country, data=gapminder)
+
+
+```{r, load_libraries, echo=FALSE, results="hide"}
+library(dplyr)
+library(ggplot2)
+```
+
+```{r, global_knitr_options, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE, fig.path="../Figs/firsttry..")
+```
+
+
+```{r, load_data, echo=FALSE}
+gapminder <- read.csv("~/Desktop/swc-wsu/data/gapminder.csv")
+```
+
+```{r, head_gapminder, echo=FALSE}
+head(gapminder)
+```
+
+
+    
+  
+
+```{r, echo=FALSE, fig.height=12}
+plot_country <- 
+  function(country, data=gapminder)
+  {
+    the_country <- country
+    library(dplyr)
+    library(ggplot2)
+    data %>% filter(country %in% the_country) %>%
+      ggplot(aes(y=lifeExp, x=year)) + geom_point(aes(size=pop)) + scale_x_log10()  + facet_grid(country~.) 
+    
+  }
+
+plot_country(c("Lebanon", "Australia", "India"))
+
+```
+
+This gapminder data has `r nrow(gapminder)` rows and `r ncol(gapminder)` columns
+
+```{r ave-life_exp_for_lebanon, include=FALSE}
+ale_lebanon <- gapminder %>%
+  filter(country == "Lebanon") %>%
+           summarize(ave=mean(lifeExp))
+```
+I get the ave life expectancy in Lebanon, averaged across these year, of  `r ale_lebanon`
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
