@@ -62,7 +62,7 @@ plot_country <-
     library(dplyr)
     library(ggplot2)
     data %>% filter(country %in% the_country) %>%
-      ggplot(aes(y=lifeExp, x=year)) + geom_point(aes(size=pop)) + scale_x_log10()  + facet_grid(country~.) 
+      ggplot(aes(y=gdpPercap, x=year)) + geom_point(aes(size=pop)) + scale_x_log10()  + facet_grid(country~.) 
     
   }
 
@@ -70,14 +70,20 @@ plot_country(c("Lebanon", "Australia", "India"))
 
 ```
 
-This gapminder data has `r nrow(gapminder)` rows and `r ncol(gapminder)` columns
+This gapminder data has `r nrow(gapminder)` rows and `r ncol(gapminder)` columns.  
+Shown are trends in GDP per capita for 3 countries: Australia, India, and Lebanon. In Australia, GDP per capita has risen steadily since 1952.  However, population is less than 200,000,000.  Lebanon also also a low population, though its growth GDP per capita was interrupted by a 15 year civil war. India has grown to a population of over 1 billion, but still the lowest GDP per capita of the three countires. 
 
-```{r ave-life_exp_for_lebanon, include=FALSE}
-ale_lebanon <- gapminder %>%
-  filter(country == "Lebanon") %>%
-           summarize(ave=mean(lifeExp))
+```{r, ave-life_exp_for_continent, echo=FALSE}
+
+ale_continent <- gapminder %>%
+  filter(year == 2007) %>%
+  group_by(continent) %>%
+  summarize(meanlife = mean(lifeExp), minlife = min(lifeExp), maxlife = max(lifeExp))
+ale_continent 
 ```
-I get the ave life expectancy in Lebanon, averaged across these year, of  `r ale_lebanon`
+
+Africa has the low life expectancy, which ranges from 39 to 76 (median of 55).  Oceania, Asia, Europe, and Americas have similar maximum life expectancies.  However, the median life expectancy is lower in Americas and Asia due to relatively lower minimum life expenctancies.
+
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 
